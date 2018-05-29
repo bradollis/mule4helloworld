@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<configuration-properties doc:name="Configuration properties" doc:id="bec6fe1b-d312-4c6a-9ddd-5f2d16d1cf21" doc:description="Application configuration" file="configuration.yaml" />
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="67f0d6a2-3965-4860-9d45-41f8f77a06c9" >
+		<http:listener-connection port="${http.port}" host="0.0.0.0"/>
+	</http:listener-config>
+	<flow name="mule4helloworldFlow" doc:id="bebd42be-73b5-4585-a71c-546a1b3e9773" >
+		<http:listener doc:name="Listener" doc:id="62630af4-0969-4c8f-823d-0e12b97b5399" config-ref="HTTP_Listener_config" path="/hello" allowedMethods="GET">
+			<http:response statusCode="200" reasonPhrase="OK" />
+			<http:error-response statusCode="500" reasonPhrase="Internal Server Error" />
+		</http:listener>
+		<set-payload value="Hello world!" doc:name="Set Payload" doc:id="7b429680-7294-4a66-b5f3-c408a1da82e0" mimeType="text/plain"/>
+	</flow>
+</mule>
