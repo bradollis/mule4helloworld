@@ -16,6 +16,8 @@
 
 		<app.runtime>4.1.1</app.runtime>
 		<mule.maven.plugin.version>3.1.1</mule.maven.plugin.version>
+
+		<artifactory.maven.plugin.version>2.6.1</artifactory.maven.plugin.version>
 	</properties>
 
 	<profiles>
@@ -58,6 +60,44 @@
 			<build>
 				<plugins>
 					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-deploy-plugin</artifactId>
+						<configuration>
+							<skip>true</skip>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.jfrog.buildinfo</groupId>
+						<artifactId>artifactory-maven-plugin</artifactId>
+						<version>${artifactory.maven.plugin.version}</version>
+						<inherited>false</inherited>
+						<configuration>
+							<deployProperties></deployProperties>
+							<artifactory>
+								<includeEnvVars>false</includeEnvVars>
+							</artifactory>
+							<publisher>
+								<contextUrl>${af.contextUrl}</contextUrl>
+								<username>${af.username}</username>
+								<password>${af.password}</password>
+								<repoKey>${af.repoKey}</repoKey>
+								<snapshotRepoKey>${af.snapshotRepoKey}</snapshotRepoKey>
+								<publishArtifacts>true</publishArtifacts>
+								<publishBuildInfo>false</publishBuildInfo>
+								<recordAllDependencies>false</recordAllDependencies>
+							</publisher>
+						</configuration>
+						<executions>
+							<execution>
+								<id>deploy</id>
+								<phase>deploy</phase>
+								<goals>
+									<goal>publish</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
 						<groupId>org.mule.tools.maven</groupId>
 						<artifactId>mule-maven-plugin</artifactId>
 						<version>${mule.maven.plugin.version}</version>
@@ -82,14 +122,6 @@
 								</goals>
 							</execution>
 						</executions>
-					</plugin>
-
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-deploy-plugin</artifactId>
-						<configuration>
-							<skip>true</skip>
-						</configuration>
 					</plugin>
 				</plugins>
 			</build>
@@ -125,6 +157,15 @@
 			<name>mulesoft release repository</name>
 			<layout>default</layout>
 			<url>https://repository.mulesoft.org/releases/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+		<pluginRepository>
+			<id>jcenter-releases</id>
+			<name>jcenter release repository</name>
+			<layout>default</layout>
+			<url>https://jcenter.bintray.com/</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
