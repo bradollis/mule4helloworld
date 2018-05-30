@@ -1,4 +1,4 @@
 language: java
+env:
 script:
-  - mvn clean deploy -Denv=test
-  - ls -lta target
+- mvn clean deploy -Denv=test -Dch.username="$CHUSERNAME" -Dch.password="$CHPASSWORD" -Dch.environment="$CHENVIRONMENT" -Dch.workerType="$CHWORKERTYPE" -Dch.region="$CHREGION" -Dch.businessGroup="$CHBUSINESSGROUP"

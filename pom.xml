@@ -20,7 +20,6 @@
 
 	<profiles>
 		<profile>
-			<!-- Default profile for local build -->
 			<id>env-dev</id>
 			<activation>
 				<property>
@@ -38,13 +37,6 @@
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-install-plugin</artifactId>
-						<configuration>
-							<skip>true</skip>
-						</configuration>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-deploy-plugin</artifactId>
 						<configuration>
 							<skip>true</skip>
@@ -53,8 +45,8 @@
 				</plugins>
 			</build>
 		</profile>
+
 		<profile>
-			<!-- Default profile for local build -->
 			<id>env-test</id>
 			<activation>
 				<property>
@@ -69,11 +61,18 @@
 						<groupId>org.mule.tools.maven</groupId>
 						<artifactId>mule-maven-plugin</artifactId>
 						<version>${mule.maven.plugin.version}</version>
-						<configuration>
-							<deploymentType>standalone</deploymentType>
-							<muleVersion>4.1.1</muleVersion>
-						</configuration>
 						<extensions>true</extensions>
+						<configuration>
+							<cloudHubDeployment>
+								<muleVersion>${app.runtime}</muleVersion>
+								<username>${ch.username}</username>
+								<password>${ch.password}</password>
+								<environment>${ch.environment}</environment>
+								<workerType>${ch.workerType}</workerType>
+								<region>${ch.region}</region>
+								<businessGroup>${ch.businessGroup}</businessGroup>
+							</cloudHubDeployment>
+						</configuration>
 						<executions>
 							<execution>
 								<id>deploy</id>
@@ -84,13 +83,7 @@
 							</execution>
 						</executions>
 					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-install-plugin</artifactId>
-						<configuration>
-							<skip>true</skip>
-						</configuration>
-					</plugin>
+
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-deploy-plugin</artifactId>
