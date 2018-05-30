@@ -1,4 +1,4 @@
 language: java
 script:
-  - mvn test
+  - mvn clean deploy -Denv=test
   - ls -lta target
