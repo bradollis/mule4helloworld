@@ -135,6 +135,7 @@
 								<region>${ch.region}</region>
 								<businessGroup>${ch.businessGroup}</businessGroup>
 							</cloudHubDeployment>
+							<community>true</community>
 						</configuration>
 						<executions>
 							<execution>
