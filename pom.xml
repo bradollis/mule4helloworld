@@ -155,7 +155,7 @@
 								<dynamicPort>http.port</dynamicPort>
 							</dynamicPorts>
 							<runtimeVersion>${app.runtime}</runtimeVersion>
-							<runtimeProduct>MULE_EE</runtimeProduct>
+							<runtimeProduct>MULE</runtimeProduct>
 							<redirectTestOutputToFile>true</redirectTestOutputToFile>
 						</configuration>
 						<executions>
