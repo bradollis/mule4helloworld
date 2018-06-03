@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+	xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<munit:config name="mule4helloworld-test-suite.xml" />
+	<munit:test name="mule4helloworld-test-suite-mule4helloworldFlowTest" description="Test the response of the hello world flow." doc:id="76a6eb49-c667-47eb-9146-275cbfa569bd" tags="integration,http">
+		<munit:enable-flow-sources >
+			<munit:enable-flow-source value="mule4helloworldFlow" />
+		</munit:enable-flow-sources>
+		<munit:execution>
+			<http:request method="GET" doc:name="Request" doc:id="cfab63c4-cc15-4f38-8590-b1af0499d139" url="http://localhost:${http.port}/hello" outputMimeType="application/json"/>
+			<set-variable value="#[payload.message]" doc:name="Set Variable" doc:id="b3034d8e-256d-451c-b960-44dc8769b487" variableName="rspMessage"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="85424ac7-2398-4f84-b53f-762f49cd1a4a" expression="#[vars.rspMessage]" is="#[MunitTools::equalTo('Hello world!')]" message='The value of message should be "Hello world!"'/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="mule4helloworld-test-suite-mule4helloworldFlowNegativeTest" description="Test that the right error occurs after a bad http endpoint request" doc:id="591af167-f3e2-462f-89ea-e20146837901" tags="integration,http" expectedErrorType="HTTP:NOT_FOUND">
+		<munit:enable-flow-sources >
+			<munit:enable-flow-source value="mule4helloworldFlow" />
+		</munit:enable-flow-sources>
+		<munit:execution >
+			<http:request method="GET" doc:name="Request" doc:id="fb7d9c7d-3c1f-4f91-87eb-dcd5cfbdd261" url="http://localhost:${http.port}/goodbye">
+				<http:response-validator >
+					<http:success-status-code-validator values="200" />
+				</http:response-validator>
+			</http:request>
+		</munit:execution>
+	</munit:test>
+
+</mule>
