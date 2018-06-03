@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>au.com.intelligentpathways</groupId>
@@ -15,6 +14,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<app.runtime>4.1.1</app.runtime>
+		<munit.version>2.1.2</munit.version>
 		<mule.maven.plugin.version>3.1.1</mule.maven.plugin.version>
 
 		<artifactory.maven.plugin.version>2.6.1</artifactory.maven.plugin.version>
@@ -44,7 +44,30 @@
 							<skip>true</skip>
 						</configuration>
 					</plugin>
-				</plugins>
+				<plugin>
+                        <groupId>com.mulesoft.munit.tools</groupId>
+                        <artifactId>munit-maven-plugin</artifactId>
+                        <version>${munit.version}</version>
+                        <executions>
+                            <execution>
+                                <id>test</id>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>test</goal>
+                                    <goal>coverage-report</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <coverage>
+                                <runCoverage>true</runCoverage>
+                                <formats>
+                                    <format>html</format>
+                                </formats>
+                            </coverage>
+                        </configuration>
+                    </plugin>
+                </plugins>
 			</build>
 		</profile>
 
@@ -72,7 +95,7 @@
 						<version>${artifactory.maven.plugin.version}</version>
 						<inherited>false</inherited>
 						<configuration>
-							<deployProperties></deployProperties>
+							<deployProperties/>
 							<artifactory>
 								<includeEnvVars>false</includeEnvVars>
 							</artifactory>
@@ -123,6 +146,28 @@
 							</execution>
 						</executions>
 					</plugin>
+					<plugin>
+						<groupId>com.mulesoft.munit.tools</groupId>
+						<artifactId>munit-maven-plugin</artifactId>
+						<version>${munit.version}</version>
+						<configuration>
+							<dynamicPorts>
+								<dynamicPort>http.port</dynamicPort>
+							</dynamicPorts>
+							<runtimeVersion>${app.runtime}</runtimeVersion>
+							<runtimeProduct>MULE_EE</runtimeProduct>
+							<redirectTestOutputToFile>true</redirectTestOutputToFile>
+						</configuration>
+						<executions>
+							<execution>
+								<id>test</id>
+								<phase>test</phase>
+								<goals>
+									<goal>test</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
 				</plugins>
 			</build>
 		</profile>
@@ -135,7 +180,20 @@
 			<version>1.2.0</version>
 			<classifier>mule-plugin</classifier>
 		</dependency>
-	</dependencies>
+		<dependency>
+            <groupId>com.mulesoft.munit</groupId>
+            <artifactId>munit-runner</artifactId>
+            <version>2.1.2</version>
+            <classifier>mule-plugin</classifier>
+            <scope>test</scope>
+        </dependency>	<dependency>
+            <groupId>com.mulesoft.munit</groupId>
+            <artifactId>munit-tools</artifactId>
+            <version>2.1.2</version>
+            <classifier>mule-plugin</classifier>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
 	<repositories>
 		<repository>
