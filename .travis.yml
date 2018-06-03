@@ -1,4 +1,9 @@
 language: java
 env:
 script:
-- mvn clean deploy -Denv=test -Dch.username="$CHUSERNAME" -Dch.password="$CHPASSWORD" -Dch.environment="$CHENVIRONMENT" -Dch.workerType="$CHWORKERTYPE" -Dch.region="$CHREGION" -Dch.businessGroup="$CHBUSINESSGROUP" -Daf.contextUrl="$AFCONTEXTURL" -Daf.username="$AFUSERNAME" -Daf.password="$AFPASSWORD" -Daf.repoKey="$AFREPOKEY" -Daf.snapshotRepoKey="$AFSNAPSHOTREPOKEY"
+- mvn clean test -Denv=test
+deploy:
+  provider: script
+  script: mvn deploy -Denv=test -Dch.username="$CHUSERNAME" -Dch.password="$CHPASSWORD" -Dch.environment="$CHENVIRONMENT" -Dch.workerType="$CHWORKERTYPE" -Dch.region="$CHREGION" -Dch.businessGroup="$CHBUSINESSGROUP" -Daf.contextUrl="$AFCONTEXTURL" -Daf.username="$AFUSERNAME" -Daf.password="$AFPASSWORD" -Daf.repoKey="$AFREPOKEY" -Daf.snapshotRepoKey="$AFSNAPSHOTREPOKEY"
+  on:
+    branch: master
