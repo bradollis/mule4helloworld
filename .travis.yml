@@ -2,9 +2,10 @@ language: java
 env:
 script:
 - cp .travis.settings.xml $HOME/.m2/settings.xml
-- mvn clean test -Denv=test
+- mvn clean test -Denv=test -B -V
 deploy:
   provider: script
-  script: mvn deploy -Denv=test -Dch.username="$CHUSERNAME" -Dch.password="$CHPASSWORD" -Dch.environment="$CHENVIRONMENT" -Dch.workerType="$CHWORKERTYPE" -Dch.region="$CHREGION" -Dch.businessGroup="$CHBUSINESSGROUP" -Daf.contextUrl="$AFCONTEXTURL" -Daf.username="$AFUSERNAME" -Daf.password="$AFPASSWORD" -Daf.repoKey="$AFREPOKEY" -Daf.snapshotRepoKey="$AFSNAPSHOTREPOKEY"
+  script: mvn deploy -Denv=test -DskipTests=true -Dch.username="$CHUSERNAME" -Dch.password="$CHPASSWORD" -Dch.environment="$CHENVIRONMENT" -Dch.workerType="$CHWORKERTYPE" -Dch.region="$CHREGION" -Dch.businessGroup="$CHBUSINESSGROUP" -Daf.contextUrl="$AFCONTEXTURL" -Daf.username="$AFUSERNAME" -Daf.password="$AFPASSWORD" -Daf.repoKey="$AFREPOKEY" -Daf.snapshotRepoKey="$AFSNAPSHOTREPOKEY" -B -V
+  skip_cleanup: true
   on:
     branch: master
