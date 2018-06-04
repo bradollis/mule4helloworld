@@ -23,7 +23,7 @@
           <layout>default</layout>
           <releases>
             <enabled>true</enabled>
-          <releases>
+          </releases>
           <snapshots>
             <enabled>true</enabled>
           </snapshots>
