@@ -5,8 +5,8 @@
   <servers>
     <server>
       <id>MuleRepository</id>
-      <username>${nexus-ee.username}</username>
-      <password>${nexus-ee.password}</password>
+      <username>${EEUSERNAME}</username>
+      <password>${EEPASSWORD}</password>
     </server>
   </servers>
   <profiles>
