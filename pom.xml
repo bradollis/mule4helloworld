@@ -135,7 +135,6 @@
 								<region>${ch.region}</region>
 								<businessGroup>${ch.businessGroup}</businessGroup>
 							</cloudHubDeployment>
-							<community>true</community>
 						</configuration>
 						<executions>
 							<execution>
@@ -195,7 +194,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
+	
 	<repositories>
 		<repository>
 			<id>anypoint-exchange</id>
